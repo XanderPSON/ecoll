@@ -17,5 +17,5 @@ function sendMessage() {
     	document.getElementById("sendMessageText").value = "";
     });
 
- 
+
 }

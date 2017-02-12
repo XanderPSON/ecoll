@@ -23,6 +23,9 @@ var prevReqQuery = null
 
 app.get('/sidebar', function (req, res) {
   prevReqQuery = req.query
+  console.log('******************************************')
+  console.log(req.query.flockEvent)
+  console.log('******************************************')
 
   res.sendFile(__dirname + '/views/side-widget.html')
 });
@@ -30,39 +33,41 @@ app.get('/sidebar', function (req, res) {
 
 app.post('/message', function (req, res) {
   var flockEvent = JSON.parse(prevReqQuery.flockEvent)
+  var fromL = req.body.language
+  var text = req.body.message
 
   if (flockEvent.chat == 'g:107053_lobby') {
     for (let i = 0; i < users.length; i++) {
       var translatedText = ''
 
-      translate('hello', {from: 'en', to: users[i]['sendingLanguage']}).then(function(res){
-        console.log(res.text)
+      translate(text, {from: fromL, to: users[i]['sendingLanguage']}).then(function(res){
         translatedText = res.text
-
-        flock.callMethod('chat.sendMessage', tokens['u:pnxk9angp3k5knp5'], {
+        flock.callMethod('chat.sendMessage', tokens[flockEvent.userId], {
             to: users[i]['id'],
             text: translatedText
-            // text: 'hello people!'
         }, function (error, response) {
             if (!error) {
                 console.log(response);
             }
         });
       })
-      // translatedText = translateText(req.body.text, users[i]['receivingLanguage'], users[i]['sendingLanguage'])
     }
   }
   else {
-    translatedText = translateText(req.body.text, usersById[flockerEvent.userId]['receivingLanguage'], users['u:pnxk9angp3k5knp5']['sendingLanguage'])
-    flock.callMethod('chat.sendMessage', tokens[flockEvent.userId], {
-          to: 'g:107053_lobby',
-          // text: translatedText
-          text: 'hello lobby!'
+    var translatedText = ''
+
+    translate(text, {from: fromL, to: groupsById['g:107053_lobby']}).then(function(res){
+      translatedText = res.text
+
+      flock.callMethod('chat.sendMessage', tokens[flockEvent.userId], {
+        to: 'g:107053_lobby',
+        text: translatedText
       }, function (error, response) {
-          if (!error) {
-              console.log(response);
-          }
+        if (!error) {
+            console.log(response);
+        }
       });
+    })
   }
   res.sendFile(__dirname + '/views/side-widget.html')
 })
@@ -146,6 +151,10 @@ var usersById = {
     'receivingLanguage': 'ta',
     'sendingLanguage': 'ta'
   },
+}
+
+var groupsById = {
+  'g:107053_lobby': 'en'
 }
 
   // console.log(req.query.flockEvent)
