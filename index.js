@@ -23,6 +23,7 @@ var prevReqQuery = null
 
 app.get('/sidebar', function (req, res) {
   prevReqQuery = req.query
+  console.log(prevReqQuery.flockEvent)
   res.sendFile(__dirname + '/views/side-widget.html')
 });
 
@@ -57,14 +58,23 @@ app.post('/message', function (req, res) {
     translate(text, {from: fromL, to: groupsById['g:107053_lobby']}).then(function(res){
       translatedText = res.text
 
-      flock.callMethod('chat.sendMessage', tokens[flockEvent.userId], {
-        to: 'g:107053_lobby',
-        text: translatedText
-      }, function (error, response) {
-        if (!error) {
-            console.log(response);
-        }
-      });
+        flock.callMethod('chat.sendMessage', tokens[flockEvent.userId], {
+          to: 'g:107053_lobby',
+          text: translatedText
+        }, function (error, response) {
+          if (!error) {
+              console.log(response);
+          }
+        });
+
+        flock.callMethod('chat.sendMessage', tokens[flockEvent.userId], {
+          to: flockEvent.chat,
+          text: text
+        }, function (error, response) {
+          if (!error) {
+              console.log(response);
+          }
+        });
     })
   }
   res.sendFile(__dirname + '/views/side-widget.html')
@@ -125,6 +135,12 @@ var users = [
     'id': 'u:m8oqmjquzhjmh088',
     'receivingLanguage': 'ta',
     'sendingLanguage': 'ta'
+  },
+  {
+    'name': 'classroom',
+    'id': 'g:107053_lobby',
+    'receivingLanguage': 'en',
+    'sendingLanguage': 'en'
   },
 ]
 
