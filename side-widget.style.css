@@ -1,0 +1,127 @@
+*, *:before, *:after{
+	padding: 0;
+	margin: 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+        color: #454545;
+    font-family: "Proxima Nova", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.block{
+	display: block;
+}
+.inline-block{
+	display: inline-block;;
+}
+
+.ls-header{
+	background-color: #f4c20d;
+	height: 48px;
+	color: #fff;
+	width: 100%;
+	display: table;
+}
+
+
+
+.ls-title{
+	display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 1.33333rem;
+    font-weight: 600;
+    color: #fff;
+
+}
+.ls-wrap {
+    background-color: #f7f7f7;
+    display: table;
+    width: 100%;
+    position: relative;
+    border:1px solid #999;
+    border-left: 0;
+    border-right:0;
+    height: 50px;
+}
+
+.ls-textarea{
+	border-bottom-width: 1px;
+    border-color: #ddd;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    color: #333;
+    font-family: 'Roboto',arial,sans-serif;
+    font-size: 15px;
+    margin: 0;
+    overflow: hidden;
+    padding-top: 10px;
+    padding-bottom: 2px;
+    padding-left: 16px;
+    padding-right: 44px;
+    resize: none;
+    width: 100%;
+    min-height: 300px;
+}
+
+.message-footer{
+	    padding: 5px 0;
+}
+
+.send-message-btn{
+width: 100%;
+height: 48px;
+}
+
+.btn-success {
+    background: #0bbe51;
+    color: #fff;
+    border-radius: 3px;
+}
+.btn {
+    display: inline-block;
+    padding: 11px 28px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.select-row{
+	position: relative;
+	padding: 12px 10px;
+	border-bottom: 1px solid #ddd;
+	background: #f2f2f2;
+}
+.language_list_section{
+	position: absolute;
+	top:7px;
+	right:5px;
+}
+
+.message-area{
+	border-top:1px solid #888;
+	border-bottom:1px solid #888;
+	padding: 0 10px;
+}
+
+.message-select-row{
+	position: relative;
+	padding: 12px 0;
+	border-bottom: 1px solid #ddd;
+}
