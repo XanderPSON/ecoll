@@ -7,22 +7,26 @@ var users = [
   {
     'name': 'xander',
     'id': 'u:pnxk9angp3k5knp5',
-    'language': 'English'
+    'receivingLanguage': 'English',
+    'sendingLanguage': 'English'
   },
   {
     'name': 'natalie',
     'id': 'u:qb5lqogelb5eeo0i',
-    'language': 'French'
+    'receivingLanguage': 'French',
+    'sendingLanguage': 'French'
   },
   {
     'name': 'sharon',
     'id': 'u:yfrfzz8wwr8r8tmy',
-    'language': 'Cantonese'
+    'receivingLanguage': 'Cantonese',
+    'sendingLanguage': 'Cantonese'
   },
   {
     'name': 'ashwin',
     'id': '',
-    'language': ''
+    'receivingLanguage': 'English',
+    'sendingLanguage': 'English'
   },
 ]
 
@@ -36,24 +40,63 @@ app.use(flock.events.tokenVerifier);
 app.post('/events', flock.events.listener);
 
 app.get('/app_launcher', function (event, res) {
-  console.log(event.query)
+  console.log('*' * 50)
   console.log(event.query.flockEvent)
-  // returns ui
+  console.log('query:' * 2, event.query)
+  // fs.readFile('side-widget.html',function (err, data){
+  //   res.writeHead(200, {'Content-Type': 'text/html','Content-Length':data.length});
+  //   res.write(data);
+  //   res.end();
+  // });
+  // if (event.query.flockEvent.chat == 'g:107053_lobby') {
+  //   for (var i = 0; i < users.length; i++) {
+  //     flock.callMethod('chat.sendMessage', tokens['u:pnxk9angp3k5knp5'], {
+  //         to: users[i]['id'],
+  //         text: 'hello people!'
+  //     }, function (error, response) {
+  //         if (!error) {
+  //             console.log(response);
+  //         }
+  //     });
+  //   }
+  // }
+  // else {
+  //   flock.callMethod('chat.sendMessage', tokens[event.query.flockEvent.userId], {
+  //         to: 'g:107053_lobby',
+  //         text: 'hello lobby!'
+  //     }, function (error, response) {
+  //         if (!error) {
+  //             console.log(response);
+  //         }
+  //     });
+  // }
 });
 
 
+//currently sends message to people
 flock.events.on('client.messageAction', function(event, callback){
-  for (var i = 0; i < users.length; i++) {
-    flock.callMethod('chat.sendMessage', tokens['u:pnxk9angp3k5knp5'], {
-        to: users[i]['id'],
-        text: 'hello'
-    }, function (error, response) {
-        if (!error) {
-            console.log(response);
-        }
-    });
+  if (event.query.flockEvent.chat == 'g:107053_lobby') {
+    for (var i = 0; i < users.length; i++) {
+      flock.callMethod('chat.sendMessage', tokens['u:pnxk9angp3k5knp5'], {
+          to: users[i]['id'],
+          text: 'hello people!'
+      }, function (error, response) {
+          if (!error) {
+              console.log(response);
+          }
+      });
+    }
   }
-
+  else {
+    flock.callMethod('chat.sendMessage', tokens[event.query.flockEvent.userId], {
+          to: 'g:107053_lobby',
+          text: 'hello lobby!'
+      }, function (error, response) {
+          if (!error) {
+              console.log(response);
+          }
+      });
+  }
 });
 
 // Read tokens from a local file, if possible.
