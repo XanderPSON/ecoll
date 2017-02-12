@@ -1,5 +1,4 @@
 function sendMessage() {
-
     var deferred;
     var elements = document.forms.sendMessage.elements;
     var obj = {};
@@ -8,16 +7,23 @@ function sendMessage() {
         obj[item.name] = item.value;
     }
 
- $.ajax({
-        type: 'POST',
-        url: '/message',
-        data: obj,
-        dataType: 'json'
-    }).then(function(){
-    	document.getElementById("sendMessageText").value = "";
-    });
+    $('.earthFirst').hide()
+    $('.earth').show()
 
+    setTimeout(function(){
+        $.ajax({
+            type: 'POST',
+            url: '/message',
+            data: obj,
+            dataType: 'json'
+        })
+    }, 1600);
 
+    setTimeout(function(){
+        document.getElementById("sendMessageText").value = "";
+        $('.earth').hide();
+        $('.earthFirst').show()
+    }, 2100);
 }
 
 

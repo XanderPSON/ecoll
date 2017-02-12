@@ -22,9 +22,6 @@ app.post('/events', flock.events.listener);
 var prevReqQuery = null
 
 app.get('/sidebar', function (req, res) {
-  // console.log('******************************************')
-  // console.log(req.query.flockEvent)
-  // console.log('******************************************')
   prevReqQuery = req.query
   res.sendFile(__dirname + '/views/side-widget.html')
 });
@@ -34,10 +31,10 @@ app.post('/message', function (req, res) {
   var flockEvent = JSON.parse(prevReqQuery.flockEvent)
   var fromL = req.body.language
   var text = req.body.message
+  var translatedText = ''
 
   if (flockEvent.chat == 'g:107053_lobby') {
     for (let i = 0; i < users.length; i++) {
-      var translatedText = ''
 
       translate(text, {from: fromL, to: users[i]['sendingLanguage']}).then(function(res){
         translatedText = res.text
@@ -176,9 +173,3 @@ var usersById = {
 var groupsById = {
   'g:107053_lobby': 'en'
 }
-
-  // console.log(req.query.flockEvent)
-  //'{"chatName":"Lobby","chat":"g:107053_lobby",
-  // "userName":"Xander Peterson","userId":"u:pnxk9angp3k5knp5",
-  // "name":"client.pressButton","button":"appLauncherButton"}
-  // return res.json({'hello world': 'asdas'})
