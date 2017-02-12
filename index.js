@@ -115,8 +115,8 @@ var users = [
   {
     'name': 'xander',
     'id': 'u:pnxk9angp3k5knp5',
-    'receivingLanguage': 'ja',
-    'sendingLanguage': 'ja'
+    'receivingLanguage': 'en',
+    'sendingLanguage': 'en'
   },
   {
     'name': 'natalie',
@@ -137,18 +137,54 @@ var users = [
     'sendingLanguage': 'ta'
   },
   {
+    'name': 'tanaka',
+    'id': 'u:2e2e84k4ci4cc0e4',
+    'receivingLanguage': 'ja',
+    'sendingLanguage': 'ja'
+  },
+  {
+    'name': 'olivia',
+    'id': 'u:68666xbse5b6s8tm',
+    'receivingLanguage': 'it',
+    'sendingLanguage': 'it'
+  },
+  {
+    'name': 'javier',
+    'id': 'u:r3n6nu7n7a773wf7',
+    'receivingLanguage': 'es',
+    'sendingLanguage': 'es'
+  },
+  {
+    'name': 'joohyun',
+    'id': 'u:gfvf7wwp7vvo78p8',
+    'receivingLanguage': 'ko',
+    'sendingLanguage': 'ko'
+  },
+  {
+    'name': 'natasha',
+    'id': 'u:eey9ztm55hzt5mme',
+    'receivingLanguage': 'ru',
+    'sendingLanguage': 'ru'
+  },
+  {
+    'name': 'babak',
+    'id': 'u:5bb5bbkja55aqnki',
+    'receivingLanguage': 'fa',
+    'sendingLanguage': 'fa'
+  },
+  {
     'name': 'classroom',
     'id': 'g:107053_lobby',
     'receivingLanguage': 'en',
     'sendingLanguage': 'en'
-  },
+  }
 ]
 
 var usersById = {
   'u:pnxk9angp3k5knp5': {
     'name': 'xander',
-    'receivingLanguage': 'ja',
-    'sendingLanguage': 'ja'
+    'receivingLanguage': 'en',
+    'sendingLanguage': 'en'
   },
   'u:qb5lqogelb5eeo0i': {
     'name': 'natalie',
