@@ -3,6 +3,7 @@ var config = require('./config.js');
 var express = require('express');
 var fs = require('fs');
 var bodyParser = require('body-parser')
+var translate = require('google-translate-api');
 
 flock.setAppId(config.appId);
 flock.setAppSecret(config.appSecret);
@@ -18,31 +19,26 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(flock.events.tokenVerifier);
 app.post('/events', flock.events.listener);
 
-app.get('/app_launcher', function (event, res) {
-  console.log(event.query.flockEvent)
-  // {"userName":"Xander Peterson","userId":"u:pnxk9angp3k5knp5",
+var reqQuery = null
+
+app.get('/sidebar', function (req, res) {
+  reqQuery = req.query
+  // console.log(req.query.flockEvent)
+  //'{"chatName":"Lobby","chat":"g:107053_lobby",
+  // "userName":"Xander Peterson","userId":"u:pnxk9angp3k5knp5",
   // "name":"client.pressButton","button":"appLauncherButton"}
 
-  // translate('Ik spreek Engels', {from: 'nl', to: 'en'}).then(res => {
-  //     console.log(res.text);
-  // }).catch(err => {
-  //     console.error(err);
-  // });
-
   res.sendFile(__dirname + '/views/side-widget.html')
-  // res.sendFile('./views/side-widget')
+  // return res.json({'hello world': 'asdas'})
 });
 
-const translate = require('google-translate-api');
 
-app.post('/post_message', function (req, res) {
-  console.log(req.body)
-  return res.json({'hello world': 'asdas'})
-})
+app.post('/message', function (req, res) {
+  var flockEvent = JSON.parse(reqQuery.flockEvent)
 
-//currently sends message to people
-flock.events.on('client.messageAction', function(event, callback){
+  if (flockEvent.chat == 'g:107053_lobby') {
     for (var i = 0; i < users.length; i++) {
+      translatedText = translateText(req.body)
       flock.callMethod('chat.sendMessage', tokens['u:pnxk9angp3k5knp5'], {
           to: users[i]['id'],
           text: 'hello people!'
@@ -52,19 +48,27 @@ flock.events.on('client.messageAction', function(event, callback){
           }
       });
     }
-  // if (event.query.flockEvent.chat == 'g:107053_lobby') {
-  // }
-  // else {
-  //   flock.callMethod('chat.sendMessage', tokens[event.query.flockEvent.userId], {
-  //         to: 'g:107053_lobby',
-  //         text: 'hello lobby!'
-  //     }, function (error, response) {
-  //         if (!error) {
-  //             console.log(response);
-  //         }
-  //     });
-  // }
-});
+  }
+  else {
+    flock.callMethod('chat.sendMessage', tokens[flockEvent.userId], {
+          to: 'g:107053_lobby',
+          text: 'hello lobby!'
+      }, function (error, response) {
+          if (!error) {
+              console.log(response);
+          }
+      });
+  }
+  res.sendFile(__dirname + '/views/side-widget.html')
+})
+
+function translateText(text, fromL, toL) {
+  translate(text, {from: fromL, to: toL}).then(res => {
+    res.text
+  }).catch(err => {
+      console.error(err);
+  });
+}
 
 // Read tokens from a local file, if possible.
 var tokens;
