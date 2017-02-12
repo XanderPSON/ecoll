@@ -17,25 +17,6 @@
     display: inline-block;;
 }
 
-.ls-header{
-    background-color: #f4c20d;
-    height: 48px;
-    color: #fff;
-    width: 100%;
-    display: table;
-}
-
-
-
-.ls-title{
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-    font-size: 1.33333rem;
-    font-weight: 600;
-    color: #fff;
-
-}
 .ls-wrap {
     background-color: #f7f7f7;
     display: table;
@@ -105,18 +86,6 @@ height: 48px;
     padding: 12px 10px;
     border-bottom: 1px solid #ddd;
     background: #f2f2f2;
-}
-.language_list_section{
-	position: absolute;
-	top:7px;
-	right:10px;
-        height: 30px;
-}
-
-.send_language_list_section{
-    position: absolute;
-    top:7px;
-    right:0;
 }
 
 .message-area{
