@@ -3,6 +3,29 @@ var config = require('./config.js');
 var express = require('express');
 var fs = require('fs');
 
+var users = [
+  {
+    'name': 'xander',
+    'id': 'u:pnxk9angp3k5knp5',
+    'language': 'English'
+  },
+  {
+    'name': 'natalie',
+    'id': 'u:qb5lqogelb5eeo0i',
+    'language': 'French'
+  },
+  {
+    'name': 'sharon',
+    'id': 'u:yfrfzz8wwr8r8tmy',
+    'language': 'Cantonese'
+  },
+  {
+    'name': 'ashwin',
+    'id': '',
+    'language': ''
+  },
+]
+
 flock.setAppId(config.appId);
 flock.setAppSecret(config.appSecret);
 
@@ -11,6 +34,27 @@ var app = express();
 // Listen for events on /events, and verify event tokens using the token verifier.
 app.use(flock.events.tokenVerifier);
 app.post('/events', flock.events.listener);
+
+app.get('/app_launcher', function (event, res) {
+  console.log(event.query)
+  console.log(event.query.flockEvent)
+  // returns ui
+});
+
+
+flock.events.on('client.messageAction', function(event, callback){
+  for (var i = 0; i < users.length; i++) {
+    flock.callMethod('chat.sendMessage', tokens['u:pnxk9angp3k5knp5'], {
+        to: users[i]['id'],
+        text: 'hello'
+    }, function (error, response) {
+        if (!error) {
+            console.log(response);
+        }
+    });
+  }
+
+});
 
 // Read tokens from a local file, if possible.
 var tokens;
