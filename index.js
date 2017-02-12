@@ -19,56 +19,58 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(flock.events.tokenVerifier);
 app.post('/events', flock.events.listener);
 
-var reqQuery = null
+var prevReqQuery = null
 
 app.get('/sidebar', function (req, res) {
-  reqQuery = req.query
-  // console.log(req.query.flockEvent)
-  //'{"chatName":"Lobby","chat":"g:107053_lobby",
-  // "userName":"Xander Peterson","userId":"u:pnxk9angp3k5knp5",
-  // "name":"client.pressButton","button":"appLauncherButton"}
+  prevReqQuery = req.query
+  console.log('******************************************')
+  console.log(req.query.flockEvent)
+  console.log('******************************************')
 
   res.sendFile(__dirname + '/views/side-widget.html')
-  // return res.json({'hello world': 'asdas'})
 });
 
 
 app.post('/message', function (req, res) {
-  var flockEvent = JSON.parse(reqQuery.flockEvent)
+  var flockEvent = JSON.parse(prevReqQuery.flockEvent)
+  var fromL = req.body.language
+  var text = req.body.message
 
   if (flockEvent.chat == 'g:107053_lobby') {
-    for (var i = 0; i < users.length; i++) {
-      translatedText = translateText(req.body)
-      flock.callMethod('chat.sendMessage', tokens['u:pnxk9angp3k5knp5'], {
-          to: users[i]['id'],
-          text: 'hello people!'
-      }, function (error, response) {
-          if (!error) {
-              console.log(response);
-          }
-      });
+    for (let i = 0; i < users.length; i++) {
+      var translatedText = ''
+
+      translate(text, {from: fromL, to: users[i]['sendingLanguage']}).then(function(res){
+        translatedText = res.text
+        flock.callMethod('chat.sendMessage', tokens[flockEvent.userId], {
+            to: users[i]['id'],
+            text: translatedText
+        }, function (error, response) {
+            if (!error) {
+                console.log(response);
+            }
+        });
+      })
     }
   }
   else {
-    flock.callMethod('chat.sendMessage', tokens[flockEvent.userId], {
-          to: 'g:107053_lobby',
-          text: 'hello lobby!'
+    var translatedText = ''
+
+    translate(text, {from: fromL, to: groupsById['g:107053_lobby']}).then(function(res){
+      translatedText = res.text
+
+      flock.callMethod('chat.sendMessage', tokens[flockEvent.userId], {
+        to: 'g:107053_lobby',
+        text: translatedText
       }, function (error, response) {
-          if (!error) {
-              console.log(response);
-          }
+        if (!error) {
+            console.log(response);
+        }
       });
+    })
   }
   res.sendFile(__dirname + '/views/side-widget.html')
 })
-
-function translateText(text, fromL, toL) {
-  translate(text, {from: fromL, to: toL}).then(res => {
-    res.text
-  }).catch(err => {
-      console.error(err);
-  });
-}
 
 // Read tokens from a local file, if possible.
 var tokens;
@@ -105,25 +107,58 @@ var users = [
   {
     'name': 'xander',
     'id': 'u:pnxk9angp3k5knp5',
-    'receivingLanguage': 'English',
-    'sendingLanguage': 'English'
+    'receivingLanguage': 'ja',
+    'sendingLanguage': 'ja'
   },
   {
     'name': 'natalie',
     'id': 'u:qb5lqogelb5eeo0i',
-    'receivingLanguage': 'French',
-    'sendingLanguage': 'French'
+    'receivingLanguage': 'fr',
+    'sendingLanguage': 'fr'
   },
   {
     'name': 'sharon',
     'id': 'u:yfrfzz8wwr8r8tmy',
-    'receivingLanguage': 'Cantonese',
-    'sendingLanguage': 'Cantonese'
+    'receivingLanguage': 'zh-CN',
+    'sendingLanguage': 'zh-CN'
   },
   {
     'name': 'ashwin',
     'id': 'u:m8oqmjquzhjmh088',
-    'receivingLanguage': 'Tamil',
-    'sendingLanguage': 'Tamil'
+    'receivingLanguage': 'ta',
+    'sendingLanguage': 'ta'
   },
 ]
+
+var usersById = {
+  'u:pnxk9angp3k5knp5': {
+    'name': 'xander',
+    'receivingLanguage': 'ja',
+    'sendingLanguage': 'ja'
+  },
+  'u:qb5lqogelb5eeo0i': {
+    'name': 'natalie',
+    'receivingLanguage': 'fr',
+    'sendingLanguage': 'fr'
+  },
+  'u:yfrfzz8wwr8r8tmy': {
+    'name': 'sharon',
+    'receivingLanguage': 'zh-CN',
+    'sendingLanguage': 'zh-CN'
+  },
+  'u:m8oqmjquzhjmh088': {
+    'name': 'ashwin',
+    'receivingLanguage': 'ta',
+    'sendingLanguage': 'ta'
+  },
+}
+
+var groupsById = {
+  'g:107053_lobby': 'en'
+}
+
+  // console.log(req.query.flockEvent)
+  //'{"chatName":"Lobby","chat":"g:107053_lobby",
+  // "userName":"Xander Peterson","userId":"u:pnxk9angp3k5knp5",
+  // "name":"client.pressButton","button":"appLauncherButton"}
+  // return res.json({'hello world': 'asdas'})
