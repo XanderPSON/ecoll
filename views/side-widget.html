@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <link rel="stylesheet" type="text/css" href="https://apps-static.flock.co/fonts/proxima-nova-a374edd1bfd78ad243eed7067a7c72053d0b6877/proxima-nova.css">
-    <link rel="stylesheet" type="text/css" href="css/side-widget.style.css">
+    <link rel="stylesheet" type="text/css" href="side-widget.style.css">
     <script defer="" type="text/javascript" src="https://apps-static.flock.co/js-sdk/0.1.0/flock.js"></script>
     <script src="https://apps-static.flock.co/jquery/2.1.4/jquery.min.js" defer=""></script>
     <script src="translate.js" defer=""></script>
@@ -135,7 +135,7 @@
         </div>
     </div>
     <div class="message-area">
-        <form id="sendMessage" name="sendForm" method="post" action="/send-message">
+        <form id="sendMessage" name="sendForm" method="post" action="/message">
             <div class="message-select-row">
                 <div class="inline-block">
                     <div>Message language</div>
@@ -254,7 +254,7 @@
                 <textarea class="ls-textarea" id="sendMessageText"  name="message" autocapitalize="off" autocomplete="off" autocorrect="off" rows="1" spellcheck="false" lang="" placeholder="Enter Text"></textarea>
                 <div class="message-footer">
                     <input type="button" id="send-message-btn" class="send-message-btn btn btn-success" onclick="sendMessage()" value="Send Message">
-            
+
                     </input>
                 </div>
             </div>
