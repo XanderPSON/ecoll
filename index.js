@@ -19,39 +19,44 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(flock.events.tokenVerifier);
 app.post('/events', flock.events.listener);
 
-var reqQuery = null
+var prevReqQuery = null
 
 app.get('/sidebar', function (req, res) {
-  reqQuery = req.query
-  // console.log(req.query.flockEvent)
-  //'{"chatName":"Lobby","chat":"g:107053_lobby",
-  // "userName":"Xander Peterson","userId":"u:pnxk9angp3k5knp5",
-  // "name":"client.pressButton","button":"appLauncherButton"}
+  prevReqQuery = req.query
 
   res.sendFile(__dirname + '/views/side-widget.html')
-  // return res.json({'hello world': 'asdas'})
 });
 
 
 app.post('/message', function (req, res) {
-  var flockEvent = JSON.parse(reqQuery.flockEvent)
+  var flockEvent = JSON.parse(prevReqQuery.flockEvent)
 
   if (flockEvent.chat == 'g:107053_lobby') {
-    for (var i = 0; i < users.length; i++) {
-      translatedText = translateText(req.body)
-      flock.callMethod('chat.sendMessage', tokens['u:pnxk9angp3k5knp5'], {
-          to: users[i]['id'],
-          text: 'hello people!'
-      }, function (error, response) {
-          if (!error) {
-              console.log(response);
-          }
-      });
+    for (let i = 0; i < users.length; i++) {
+      var translatedText = ''
+
+      translate('hello', {from: 'en', to: users[i]['sendingLanguage']}).then(function(res){
+        console.log(res.text)
+        translatedText = res.text
+
+        flock.callMethod('chat.sendMessage', tokens['u:pnxk9angp3k5knp5'], {
+            to: users[i]['id'],
+            text: translatedText
+            // text: 'hello people!'
+        }, function (error, response) {
+            if (!error) {
+                console.log(response);
+            }
+        });
+      })
+      // translatedText = translateText(req.body.text, users[i]['receivingLanguage'], users[i]['sendingLanguage'])
     }
   }
   else {
+    translatedText = translateText(req.body.text, usersById[flockerEvent.userId]['receivingLanguage'], users['u:pnxk9angp3k5knp5']['sendingLanguage'])
     flock.callMethod('chat.sendMessage', tokens[flockEvent.userId], {
           to: 'g:107053_lobby',
+          // text: translatedText
           text: 'hello lobby!'
       }, function (error, response) {
           if (!error) {
@@ -61,14 +66,6 @@ app.post('/message', function (req, res) {
   }
   res.sendFile(__dirname + '/views/side-widget.html')
 })
-
-function translateText(text, fromL, toL) {
-  translate(text, {from: fromL, to: toL}).then(res => {
-    res.text
-  }).catch(err => {
-      console.error(err);
-  });
-}
 
 // Read tokens from a local file, if possible.
 var tokens;
@@ -105,25 +102,54 @@ var users = [
   {
     'name': 'xander',
     'id': 'u:pnxk9angp3k5knp5',
-    'receivingLanguage': 'English',
-    'sendingLanguage': 'English'
+    'receivingLanguage': 'ja',
+    'sendingLanguage': 'ja'
   },
   {
     'name': 'natalie',
     'id': 'u:qb5lqogelb5eeo0i',
-    'receivingLanguage': 'French',
-    'sendingLanguage': 'French'
+    'receivingLanguage': 'fr',
+    'sendingLanguage': 'fr'
   },
   {
     'name': 'sharon',
     'id': 'u:yfrfzz8wwr8r8tmy',
-    'receivingLanguage': 'Cantonese',
-    'sendingLanguage': 'Cantonese'
+    'receivingLanguage': 'zh-CN',
+    'sendingLanguage': 'zh-CN'
   },
   {
     'name': 'ashwin',
     'id': 'u:m8oqmjquzhjmh088',
-    'receivingLanguage': 'Tamil',
-    'sendingLanguage': 'Tamil'
+    'receivingLanguage': 'ta',
+    'sendingLanguage': 'ta'
   },
 ]
+
+var usersById = {
+  'u:pnxk9angp3k5knp5': {
+    'name': 'xander',
+    'receivingLanguage': 'ja',
+    'sendingLanguage': 'ja'
+  },
+  'u:qb5lqogelb5eeo0i': {
+    'name': 'natalie',
+    'receivingLanguage': 'fr',
+    'sendingLanguage': 'fr'
+  },
+  'u:yfrfzz8wwr8r8tmy': {
+    'name': 'sharon',
+    'receivingLanguage': 'zh-CN',
+    'sendingLanguage': 'zh-CN'
+  },
+  'u:m8oqmjquzhjmh088': {
+    'name': 'ashwin',
+    'receivingLanguage': 'ta',
+    'sendingLanguage': 'ta'
+  },
+}
+
+  // console.log(req.query.flockEvent)
+  //'{"chatName":"Lobby","chat":"g:107053_lobby",
+  // "userName":"Xander Peterson","userId":"u:pnxk9angp3k5knp5",
+  // "name":"client.pressButton","button":"appLauncherButton"}
+  // return res.json({'hello world': 'asdas'})
