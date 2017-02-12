@@ -173,9 +173,3 @@ var usersById = {
 var groupsById = {
   'g:107053_lobby': 'en'
 }
-
-  // console.log(req.query.flockEvent)
-  //'{"chatName":"Lobby","chat":"g:107053_lobby",
-  // "userName":"Xander Peterson","userId":"u:pnxk9angp3k5knp5",
-  // "name":"client.pressButton","button":"appLauncherButton"}
-  // return res.json({'hello world': 'asdas'})
