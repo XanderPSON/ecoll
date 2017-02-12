@@ -13,18 +13,14 @@
 </head>
 
 <body>
-    <div class="ls-header">
-        <div class="ls-title">
-            Translate
-        </div>
-    </div>
+
     <div class="select-row">
-        <div class="inline-block">
+        <div class="block">
             <div>Receiving language</div>
         </div>
-        <div class="receiving-language-wrap inline-block">
-            <form id="recieveLanguage" name="pickLanguageForm" method="post" action="/receive-language">
-                <select id="receiving-language" name="language" class="language_list_section" onchange="this.form.submit()">
+        <div class="receiving-language-wrap">
+            <form id="recieveLanguage" name="lanugage-form" method="post" action="/receive-language">
+                <select id="receiving-language" name="language" onchange="this.form.submit()">
                     <option value="none">No translation</option>
                     <option value="af">Afrikaans</option>
                     <option value="sq">Albanian</option>
@@ -137,11 +133,11 @@
     <div class="message-area">
         <form id="sendMessage" name="sendForm" method="post" action="/message">
             <div class="message-select-row">
-                <div class="inline-block">
+                <div>
                     <div>Message language</div>
                 </div>
-                <div class="sending-language-wrap inline-block">
-                    <select id="sending-language" name="language" class="send_language_list_section">
+                <div class="sending-language-wrap">
+                    <select id="sending-language" name="language">
                         <option value="detect">Detect Language</option>
                         <option value="af">Afrikaans</option>
                         <option value="sq">Albanian</option>
@@ -253,7 +249,7 @@
             <div class="block">
                 <textarea class="ls-textarea" id="sendMessageText"  name="message" autocapitalize="off" autocomplete="off" autocorrect="off" rows="1" spellcheck="false" lang="" placeholder="Enter Text"></textarea>
                 <div class="message-footer">
-                    <input type="button" id="send-message-btn" class="send-message-btn btn btn-success" onclick="sendMessage()" value="Send Message">
+                    <input name="action" type="button" id="send-message-btn" class="send-message-btn btn btn-success" onclick="sendMessage()" value="Send Message">
 
                     </input>
                 </div>
