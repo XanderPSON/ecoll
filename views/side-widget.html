@@ -30,7 +30,7 @@
             <div>Receiving language</div>
         </div>
         <div class="receiving-language-wrap">
-            <form id="recieveLanguage" name="lanugage-form" method="post" action="/receive-language">
+            <form id="recieveLanguage" name="lanugage-form" method="post" action="/r_language">
                 <select id="receiving-language" name="language" onchange="this.form.submit()">
                     <option value="none">No translation</option>
                     <option value="af">Afrikaans</option>
@@ -261,12 +261,16 @@
                 <textarea class="ls-textarea" id="sendMessageText"  name="message" autocapitalize="off" autocomplete="off" autocorrect="off" rows="1" spellcheck="false" lang="" placeholder="Enter Text"></textarea>
                 <div class="message-footer">
                     <input name="action" type="button" id="send-message-btn" class="send-message-btn btn btn-success" onclick="sendMessage()" value="Send Message">
-            
+
                     </input>
                 </div>
             </div>
         </form>
     </div>
+       <div class='earth-cont'>
+         <img class='earthFirst' src="earthFirst.gif" alt="earth">
+         <img class='earth' src="earth.gif" alt="earth">
+     </div>
 </body>
 
 </html>

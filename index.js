@@ -26,6 +26,8 @@ app.get('/sidebar', function (req, res) {
   res.sendFile(__dirname + '/views/side-widget.html')
 });
 
+app.post('/r_language', function (req, res) {
+})
 
 app.post('/message', function (req, res) {
   var flockEvent = JSON.parse(prevReqQuery.flockEvent)
@@ -65,27 +67,6 @@ app.post('/message', function (req, res) {
       });
     })
   }
-  res.sendFile(__dirname + '/views/side-widget.html')
-})
-
-app.post('/message_student', function (req, res) {
-  var flockEvent = JSON.parse(prevReqQuery.flockEvent)
-  var fromL = req.body.language
-  var text = req.body.message
-  var translatedText = ''
-
-  translate(text, {from: fromL, to: groupsById['g:107053_lobby']}).then(function(res){
-    var translatedText = res.text
-
-    flock.callMethod('chat.sendMessage', tokens[flockEvent.userId], {
-      to: 'g:107053_lobby',
-      text: translatedText
-    }, function (error, response) {
-      if (!error) {
-          console.log(response);
-      }
-    });
-  })
   res.sendFile(__dirname + '/views/side-widget.html')
 })
 
