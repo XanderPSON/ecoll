@@ -8,6 +8,14 @@ function sendMessage() {
         obj[item.name] = item.value;
     }
 
- 	document.getElementById("sendMessageText").value = "";
-    document.forms.sendMessage.submit();
+ $.ajax({
+        type: 'POST',
+        url: '/message',
+        data: obj,
+        dataType: 'json'
+    }).then(function(){
+    	document.getElementById("sendMessageText").value = "";
+    });
+
+ 
 }
