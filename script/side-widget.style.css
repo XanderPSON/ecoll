@@ -1,6 +1,6 @@
 *, *:before, *:after{
-	padding: 0;
-	margin: 0;
+    padding: 0;
+    margin: 0;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -11,24 +11,24 @@
 }
 
 .block{
-	display: block;
+    display: block;
 }
 .inline-block{
-	display: inline-block;;
+    display: inline-block;;
 }
 
 .ls-header{
-	background-color: #f4c20d;
-	height: 48px;
-	color: #fff;
-	width: 100%;
-	display: table;
+    background-color: #f4c20d;
+    height: 48px;
+    color: #fff;
+    width: 100%;
+    display: table;
 }
 
 
 
 .ls-title{
-	display: table-cell;
+    display: table-cell;
     vertical-align: middle;
     text-align: center;
     font-size: 1.33333rem;
@@ -48,7 +48,7 @@
 }
 
 .ls-textarea{
-	border-bottom-width: 1px;
+    border-bottom-width: 1px;
     border-color: #ddd;
     border-left: none;
     border-right: none;
@@ -67,7 +67,7 @@
 }
 
 .message-footer{
-	    padding: 5px 0;
+        padding: 5px 0;
 }
 
 .send-message-btn{
@@ -101,10 +101,10 @@ height: 48px;
 }
 
 .select-row{
-	position: relative;
-	padding: 12px 10px;
-	border-bottom: 1px solid #ddd;
-	background: #f2f2f2;
+    position: relative;
+    padding: 12px 10px;
+    border-bottom: 1px solid #ddd;
+    background: #f2f2f2;
 }
 .language_list_section{
 	position: absolute;
@@ -115,17 +115,17 @@ height: 48px;
 .send_language_list_section{
     position: absolute;
     top:7px;
-    right:0;  
+    right:0;
 }
 
 .message-area{
-	border-top:1px solid #888;
-	border-bottom:1px solid #888;
-	padding: 0 10px;
+    border-top:1px solid #888;
+    border-bottom:1px solid #888;
+    padding: 0 10px;
 }
 
 .message-select-row{
-	position: relative;
-	padding: 12px 0;
-	border-bottom: 1px solid #ddd;
+    position: relative;
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
 }

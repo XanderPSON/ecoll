@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "express": "^4.14.1",
-    "flockos": "^0.0.4"
+    "flockos": "^0.0.4",
+    "google-translate-api": "^2.2.2"
   }
 }
