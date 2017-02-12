@@ -19,3 +19,18 @@ function sendMessage() {
 
 
 }
+
+
+document.getElementById("toggle-send").onclick=function(){
+	if(document.getElementById("toggle-send").classList.contains("toggle-off")){
+
+document.getElementById("receive-row").classList.add("hide");
+document.getElementById("message-row").classList.remove("hide");
+	}else{
+		document.getElementById("receive-row").classList.remove("hide");
+		document.getElementById("message-row").classList.add("hide");
+
+	}
+document.getElementById("toggle-send").classList.toggle("toggle-off");
+};
+

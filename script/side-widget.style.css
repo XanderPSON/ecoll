@@ -4,7 +4,6 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-        color: #454545;
     font-family: "Proxima Nova", Arial, sans-serif;
     font-size: 18px;
     font-weight: 400;
@@ -14,12 +13,41 @@
     display: block;
 }
 
+.hide{
+    display: none;
+}
+
 .inline-block{
     display: inline-block;;
 }
 
+.toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    padding: 3px;
+}
+
+.toggle-send{
+width: 45px;
+max-height: 48px;
+    padding: 11px;
+    display: inline-block;
+    background: #669AFF;
+    border-radius: 4px;
+    fill: #fff;
+    border:1px solid transparent;
+}
+
+.toggle-off{
+ background: transparent;
+    color: #669AFF;
+     border:1px solid #669AFF;
+    fill: #669AFF;
+}
+
 .ls-wrap {
-    background-color: #f7f7f7;
     display: table;
     width: 100%;
     position: relative;
